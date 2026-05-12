@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Su Ürünleri AR</title>
 
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -14,7 +14,6 @@
 
     <div id="startScreen">
         <h1>Su Ürünleri AR</h1>
-        <p>Deneyimi başlatmak için aşağıdaki butona tıkla.</p>
         <button id="startBtn">Kamerayı Başlat</button>
     </div>
 
@@ -33,7 +32,6 @@
 
     <a-scene 
         mindar-image="imageTargetSrc: ./assets/target/targets.mind; autoStart: false;" 
-        embedded 
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
         vr-mode-ui="enabled: false" 
