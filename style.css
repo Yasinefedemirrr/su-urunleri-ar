@@ -1,6 +1,8 @@
 body {
+
   margin: 0;
   overflow: hidden;
+
   font-family: Arial, sans-serif;
 }
 
@@ -9,6 +11,7 @@ body {
 #startScreen {
 
   position: fixed;
+
   z-index: 999;
 
   width: 100%;
@@ -17,23 +20,29 @@ body {
   background: #001d3d;
 
   display: flex;
+
   flex-direction: column;
+
   justify-content: center;
+
   align-items: center;
 
   color: white;
 }
 
 #startScreen h1 {
+
   margin-bottom: 20px;
 }
 
 button {
 
   padding: 15px 25px;
+
   font-size: 18px;
 
   border: none;
+
   border-radius: 10px;
 
   cursor: pointer;
@@ -42,12 +51,14 @@ button {
 /* Popup */
 
 .hidden {
+
   display: none;
 }
 
 #fishPopup {
 
   position: fixed;
+
   z-index: 9999;
 
   width: 100%;
@@ -56,13 +67,16 @@ button {
   background: rgba(0,0,0,0.5);
 
   display: flex;
+
   justify-content: center;
+
   align-items: center;
 }
 
 .popup-card {
 
   width: 90%;
+
   max-width: 350px;
 
   background: white;
@@ -72,37 +86,18 @@ button {
   padding: 20px;
 
   text-align: center;
-
-  animation: popupAnim 0.4s ease;
 }
 
 .popup-card img {
 
   width: 100%;
+
   border-radius: 15px;
-}
-
-.popup-card h2 {
-
-  margin-top: 15px;
 }
 
 .popup-card button {
 
   width: 100%;
+
   margin-top: 15px;
-}
-
-@keyframes popupAnim {
-
-  from {
-    transform: scale(0.7);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-
 }
