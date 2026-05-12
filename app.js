@@ -25,21 +25,6 @@ const startBtn =
 const startScreen =
   document.getElementById("startScreen");
 
-/* Başlat */
-
-startBtn.addEventListener("click", async () => {
-
-  startScreen.style.display = "none";
-
-  const scene =
-    document.querySelector("a-scene");
-
-  await scene.systems[
-    "mindar-image-system"
-  ].start();
-
-});
-
 /* Popup kapat */
 
 closeBtn.addEventListener("click", () => {
@@ -84,7 +69,7 @@ const fishData = {
 
     name: "Köpek Balığı",
 
-    desc: "Köpek balıkları yırtıcı deniz canlılarıdır.",
+    desc: "Köpek balıkları yırtıcı canlılardır.",
 
     size: "3 metre",
 
@@ -123,6 +108,14 @@ function showFish(fish) {
   popup.classList.remove("hidden");
 
 }
+
+/* Başlat Butonu */
+
+startBtn.addEventListener("click", () => {
+
+  startScreen.style.display = "none";
+
+});
 
 /* MindAR */
 
