@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Su Ürünleri AR</title>
 
@@ -17,10 +18,33 @@
 
 <body>
 
-  <!-- Başlangıç UI -->
+  <!-- Başlangıç Ekranı -->
   <div id="startScreen">
     <h1>Su Ürünleri AR</h1>
     <button id="startBtn">Kamerayı Başlat</button>
+  </div>
+
+  <!-- POPUP -->
+  <div id="fishPopup" class="hidden">
+
+    <div class="popup-card">
+
+      <img id="fishImage" src="./assets/images/levrek.jpg" alt="Levrek">
+
+      <h2 id="fishName">Levrek</h2>
+
+      <p id="fishDesc">
+        Levrek Ege Denizi’nde yaşayan etçil bir balıktır.
+      </p>
+
+      <p><strong>Boyut:</strong> 40 cm</p>
+
+      <p><strong>Habitat:</strong> Ege Denizi</p>
+
+      <button id="closeBtn">Kapat</button>
+
+    </div>
+
   </div>
 
   <!-- AR SAHNESİ -->
@@ -53,4 +77,5 @@
   <script src="app.js"></script>
 
 </body>
+
 </html>
