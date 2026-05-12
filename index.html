@@ -20,8 +20,13 @@
 
   <!-- Başlangıç Ekranı -->
   <div id="startScreen">
+
     <h1>Su Ürünleri AR</h1>
-    <button id="startBtn">Kamerayı Başlat</button>
+
+    <button id="startBtn">
+      Kamerayı Başlat
+    </button>
+
   </div>
 
   <!-- POPUP -->
@@ -29,19 +34,33 @@
 
     <div class="popup-card">
 
-      <img id="fishImage" src="./assets/images/levrek.jpg" alt="Levrek">
+      <img
+        id="fishImage"
+        src="./assets/images/levrek.jpg"
+        alt="Balık"
+      >
 
-      <h2 id="fishName">Levrek</h2>
+      <h2 id="fishName">
+        Balık Adı
+      </h2>
 
       <p id="fishDesc">
-        Levrek Ege Denizi’nde yaşayan etçil bir balıktır.
+        Balık açıklaması burada görünecek.
       </p>
 
-      <p><strong>Boyut:</strong> 40 cm</p>
+      <p>
+        <strong>Boyut:</strong>
+        <span id="fishSize"></span>
+      </p>
 
-      <p><strong>Habitat:</strong> Ege Denizi</p>
+      <p>
+        <strong>Habitat:</strong>
+        <span id="fishHabitat"></span>
+      </p>
 
-      <button id="closeBtn">Kapat</button>
+      <button id="closeBtn">
+        Kapat
+      </button>
 
     </div>
 
@@ -49,26 +68,80 @@
 
   <!-- AR SAHNESİ -->
   <a-scene
-    mindar-image="imageTargetSrc: ./assets/targets.mind;"
+    mindar-image="imageTargetSrc: ./assets//targets/targets.mind;"
     color-space="sRGB"
     renderer="colorManagement: true;"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
   >
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-camera
+      position="0 0 0"
+      look-controls="enabled: false"
+    >
+    </a-camera>
 
-    <!-- TARGET -->
-    <a-entity mindar-image-target="targetIndex: 0">
+    <!-- LEVREK -->
+    <a-entity
+      mindar-image-target="targetIndex: 0"
+      id="levrekTarget"
+    >
 
-      <!-- TEST KUTUSU -->
       <a-box
         position="0 0 0"
         color="blue"
         depth="0.5"
         height="0.5"
-        width="0.5">
+        width="0.5"
+      >
       </a-box>
+
+    </a-entity>
+
+    <!-- BALON BALIĞI -->
+    <a-entity
+      mindar-image-target="targetIndex: 1"
+      id="balonTarget"
+    >
+
+      <a-sphere
+        position="0 0 0"
+        radius="0.3"
+        color="yellow"
+      >
+      </a-sphere>
+
+    </a-entity>
+
+    <!-- KOPEK BALIĞI -->
+    <a-entity
+      mindar-image-target="targetIndex: 2"
+      id="kopekTarget"
+    >
+
+      <a-cylinder
+        position="0 0 0"
+        radius="0.2"
+        height="0.5"
+        color="red"
+      >
+      </a-cylinder>
+
+    </a-entity>
+
+    <!-- YUNUS -->
+    <a-entity
+      mindar-image-target="targetIndex: 3"
+      id="yunusTarget"
+    >
+
+      <a-cone
+        position="0 0 0"
+        radius-bottom="0.3"
+        height="0.6"
+        color="green"
+      >
+      </a-cone>
 
     </a-entity>
 
