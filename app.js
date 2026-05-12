@@ -1,26 +1,42 @@
-const popup = document.getElementById("fishPopup");
+const popup =
+  document.getElementById("fishPopup");
 
-const fishImage = document.getElementById("fishImage");
+const fishImage =
+  document.getElementById("fishImage");
 
-const fishName = document.getElementById("fishName");
+const fishName =
+  document.getElementById("fishName");
 
-const fishDesc = document.getElementById("fishDesc");
+const fishDesc =
+  document.getElementById("fishDesc");
 
-const fishSize = document.getElementById("fishSize");
+const fishSize =
+  document.getElementById("fishSize");
 
-const fishHabitat = document.getElementById("fishHabitat");
+const fishHabitat =
+  document.getElementById("fishHabitat");
 
-const closeBtn = document.getElementById("closeBtn");
+const closeBtn =
+  document.getElementById("closeBtn");
 
-const startBtn = document.getElementById("startBtn");
+const startBtn =
+  document.getElementById("startBtn");
 
-const startScreen = document.getElementById("startScreen");
+const startScreen =
+  document.getElementById("startScreen");
 
 /* Başlat */
 
-startBtn.addEventListener("click", () => {
+startBtn.addEventListener("click", async () => {
 
   startScreen.style.display = "none";
+
+  const scene =
+    document.querySelector("a-scene");
+
+  await scene.systems[
+    "mindar-image-system"
+  ].start();
 
 });
 
@@ -55,7 +71,7 @@ const fishData = {
 
     name: "Balon Balığı",
 
-    desc: "Balon balıkları istilacı tür olarak bilinir.",
+    desc: "Balon balıkları istilacı türdür.",
 
     size: "25 cm",
 
@@ -81,7 +97,7 @@ const fishData = {
 
     name: "Yunus Balığı",
 
-    desc: "Yunuslar oldukça zeki deniz canlılarıdır.",
+    desc: "Yunuslar oldukça zeki canlılardır.",
 
     size: "2 metre",
 
@@ -126,42 +142,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* LEVREK */
 
-  levrekTarget.addEventListener("targetFound", () => {
+  levrekTarget.addEventListener(
+    "targetFound",
+    () => {
 
-    console.log("LEVREK BULUNDU");
+      console.log("LEVREK BULUNDU");
 
-    showFish(fishData.levrek);
+      showFish(fishData.levrek);
 
-  });
+    }
+  );
 
   /* BALON */
 
-  balonTarget.addEventListener("targetFound", () => {
+  balonTarget.addEventListener(
+    "targetFound",
+    () => {
 
-    console.log("BALON BULUNDU");
+      console.log("BALON BULUNDU");
 
-    showFish(fishData.balon);
+      showFish(fishData.balon);
 
-  });
+    }
+  );
 
   /* KOPEK */
 
-  kopekTarget.addEventListener("targetFound", () => {
+  kopekTarget.addEventListener(
+    "targetFound",
+    () => {
 
-    console.log("KOPEK BULUNDU");
+      console.log("KOPEK BULUNDU");
 
-    showFish(fishData.kopek);
+      showFish(fishData.kopek);
 
-  });
+    }
+  );
 
   /* YUNUS */
 
-  yunusTarget.addEventListener("targetFound", () => {
+  yunusTarget.addEventListener(
+    "targetFound",
+    () => {
 
-    console.log("YUNUS BULUNDU");
+      console.log("YUNUS BULUNDU");
 
-    showFish(fishData.yunus);
+      showFish(fishData.yunus);
 
-  });
+    }
+  );
 
 });
