@@ -1,4 +1,4 @@
-/* ELEMENTLER */
+/* ELEMENTS */
 
 const popup = document.getElementById("fishPopup");
 
@@ -18,7 +18,7 @@ const startBtn = document.getElementById("startBtn");
 
 const startScreen = document.getElementById("startScreen");
 
-/* BALIK DATASI */
+/* FISH DATA */
 
 const fishData = {
 
@@ -63,15 +63,25 @@ const fishData = {
 
 };
 
-/* BAŞLAT BUTONU */
+/* SCENE */
 
-startBtn.addEventListener("click", () => {
+const sceneEl = document.querySelector("a-scene");
+
+/* MINDAR SYSTEM */
+
+const mindarSystem = sceneEl.systems["mindar-image-system"];
+
+/* START BUTTON */
+
+startBtn.addEventListener("click", async () => {
 
   startScreen.style.display = "none";
 
+  await mindarSystem.start();
+
 });
 
-/* POPUP KAPAT */
+/* CLOSE POPUP */
 
 closeBtn.addEventListener("click", () => {
 
@@ -79,7 +89,7 @@ closeBtn.addEventListener("click", () => {
 
 });
 
-/* TARGET EVENTLERİ */
+/* DOM LOADED */
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -87,11 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   targets.forEach((target, index) => {
 
-    /* TARGET BULUNDU */
+    /* TARGET FOUND */
 
     target.addEventListener("targetFound", () => {
 
-      console.log("TARGET BULUNDU:", index);
+      console.log("TARGET FOUND:", index);
 
       const fish = fishData[index];
 
@@ -111,11 +121,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    /* TARGET KAYBOLDU */
+    /* TARGET LOST */
 
     target.addEventListener("targetLost", () => {
 
-      console.log("TARGET KAYBOLDU:", index);
+      console.log("TARGET LOST:", index);
+
+      setTimeout(() => {
+
+        popup.classList.add("hidden");
+
+      }, 500);
 
     });
 

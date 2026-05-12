@@ -13,9 +13,11 @@
   <title>Su Ürünleri AR</title>
 
   <!-- AFRAME -->
+
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
   <!-- MINDAR -->
+
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <link rel="stylesheet" href="style.css" />
@@ -24,15 +26,23 @@
 
 <body>
 
-  <!-- BAŞLANGIÇ EKRANI -->
+  <!-- START SCREEN -->
 
   <div id="startScreen">
 
-    <h1>Su Ürünleri AR</h1>
+    <div class="start-card">
 
-    <button id="startBtn">
-      Kamerayı Başlat
-    </button>
+      <h1>Su Ürünleri AR</h1>
+
+      <p>
+        Kamerayı başlatıp balık görsellerini taratın.
+      </p>
+
+      <button id="startBtn">
+        Kamerayı Başlat
+      </button>
+
+    </div>
 
   </div>
 
@@ -53,13 +63,19 @@
       <p id="fishDesc"></p>
 
       <p>
+
         <strong>Boyut:</strong>
+
         <span id="fishSize"></span>
+
       </p>
 
       <p>
+
         <strong>Habitat:</strong>
+
         <span id="fishHabitat"></span>
+
       </p>
 
       <button id="closeBtn">
@@ -70,29 +86,45 @@
 
   </div>
 
-  <!-- AR SAHNESİ -->
+  <!-- AR SCENE -->
 
   <a-scene
 
-    mindar-image="imageTargetSrc: ./assets/targets/targets.mind;"
+    mindar-image="
+      imageTargetSrc: ./assets/targets/targets.mind;
+      autoStart: false;
+      uiScanning: true;
+      uiLoading: true;
+      filterMinCF: 0.0001;
+      filterBeta: 0.001;
+    "
 
     color-space="sRGB"
 
-    renderer="colorManagement: true;"
+    renderer="
+      colorManagement: true;
+      physicallyCorrectLights: true;
+      antialias: true;
+    "
 
     vr-mode-ui="enabled: false"
 
     device-orientation-permission-ui="enabled: false"
 
+    xr-mode-ui="enabled: false"
+
     embedded
 
   >
 
-    <!-- KAMERA -->
+    <!-- CAMERA -->
 
     <a-camera
+
       position="0 0 0"
+
       look-controls="enabled: false"
+
     >
     </a-camera>
 
@@ -101,11 +133,17 @@
     <a-entity mindar-image-target="targetIndex: 0">
 
       <a-box
+
         position="0 0 0"
-        color="blue"
+
+        color="#0077ff"
+
         depth="0.5"
+
         height="0.5"
+
         width="0.5"
+
       >
       </a-box>
 
@@ -116,11 +154,17 @@
     <a-entity mindar-image-target="targetIndex: 1">
 
       <a-box
+
         position="0 0 0"
-        color="red"
+
+        color="#ff0000"
+
         depth="0.5"
+
         height="0.5"
+
         width="0.5"
+
       >
       </a-box>
 
@@ -131,11 +175,17 @@
     <a-entity mindar-image-target="targetIndex: 2">
 
       <a-box
+
         position="0 0 0"
-        color="green"
+
+        color="#00aa00"
+
         depth="0.5"
+
         height="0.5"
+
         width="0.5"
+
       >
       </a-box>
 

@@ -1,47 +1,83 @@
 body {
+
   margin: 0;
+
   overflow: hidden;
+
   font-family: Arial, sans-serif;
+
+  background: black;
 }
 
-/* BAŞLANGIÇ EKRANI */
+/* START SCREEN */
 
 #startScreen {
 
   position: fixed;
 
-  z-index: 99999;
+  z-index: 999999;
 
   width: 100%;
+
   height: 100%;
 
-  background: #001d3d;
+  background: linear-gradient(
+    180deg,
+    #001d3d,
+    #003566
+  );
 
   display: flex;
-
-  flex-direction: column;
 
   justify-content: center;
 
   align-items: center;
-
-  color: white;
 }
 
-#startScreen h1 {
+.start-card {
 
-  font-size: 42px;
+  width: 90%;
+
+  max-width: 400px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+.start-card h1 {
+
+  margin-bottom: 10px;
+
+  color: #001d3d;
+}
+
+.start-card p {
+
+  color: #555;
 
   margin-bottom: 20px;
 }
 
+/* BUTTON */
+
 button {
 
-  padding: 15px 25px;
+  width: 100%;
+
+  padding: 15px;
 
   border: none;
 
   border-radius: 12px;
+
+  background: #001d3d;
+
+  color: white;
 
   font-size: 18px;
 
@@ -51,6 +87,7 @@ button {
 /* POPUP */
 
 .hidden {
+
   display: none !important;
 }
 
@@ -61,6 +98,7 @@ button {
   z-index: 999999;
 
   width: 100%;
+
   height: 100%;
 
   display: flex;
@@ -106,18 +144,7 @@ button {
   line-height: 1.5;
 }
 
-.popup-card button {
-
-  width: 100%;
-
-  margin-top: 15px;
-
-  background: #001d3d;
-
-  color: white;
-}
-
-/* ANİMASYON */
+/* ANIMATION */
 
 @keyframes popupAnim {
 
