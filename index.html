@@ -1,199 +1,52 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Su Ürünleri AR</title>
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Su Ürünleri AR</title>
-
-  <!-- AFRAME -->
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-
-  <!-- MINDAR -->
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
-  <link rel="stylesheet" href="style.css">
-
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <!-- Başlangıç Ekranı -->
-
-  <div id="startScreen">
-
-    <h1>Su Ürünleri AR</h1>
-
-    <button id="startBtn">
-      Kamerayı Başlat
-    </button>
-
-  </div>
-
-  <!-- Popup -->
-
-  <div id="fishPopup" class="hidden">
-
-    <div class="popup-card">
-
-      <img
-        id="fishImage"
-        src="./assets/images/levrek.jpg"
-        alt="Balık"
-      >
-
-      <h2 id="fishName">
-        Balık Adı
-      </h2>
-
-      <p id="fishDesc">
-        Balık açıklaması
-      </p>
-
-      <p>
-
-        <strong>Boyut:</strong>
-
-        <span id="fishSize"></span>
-
-      </p>
-
-      <p>
-
-        <strong>Habitat:</strong>
-
-        <span id="fishHabitat"></span>
-
-      </p>
-
-      <button id="closeBtn">
-        Kapat
-      </button>
-
+    <div id="startScreen">
+        <h1>Su Ürünleri AR</h1>
+        <p>Deneyimi başlatmak için aşağıdaki butona tıkla.</p>
+        <button id="startBtn">Kamerayı Başlat</button>
     </div>
 
-  </div>
+    <div id="fishPopup" class="hidden">
+        <div class="popup-card">
+            <img id="fishImage" src="" alt="Balık">
+            <h2 id="fishName"></h2>
+            <p id="fishDesc"></p>
+            <div class="details">
+                <p><strong>Boyut:</strong> <span id="fishSize"></span></p>
+                <p><strong>Habitat:</strong> <span id="fishHabitat"></span></p>
+            </div>
+            <button id="closeBtn">Kapat</button>
+        </div>
+    </div>
 
-  <!-- AR SAHNESİ -->
+    <a-scene 
+        mindar-image="imageTargetSrc: ./assets/target/targets.mind; autoStart: false;" 
+        embedded 
+        color-space="sRGB" 
+        renderer="colorManagement: true, physicallyCorrectLights" 
+        vr-mode-ui="enabled: false" 
+        device-orientation-permission-ui="enabled: false">
+        
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <a-scene
+        <a-entity id="levrekTarget" mindar-image-target="targetIndex: 0"></a-entity>
+        <a-entity id="balonTarget" mindar-image-target="targetIndex: 1"></a-entity>
+        <a-entity id="kopekTarget" mindar-image-target="targetIndex: 2"></a-entity>
+        <a-entity id="yunusTarget" mindar-image-target="targetIndex: 3"></a-entity>
+    </a-scene>
 
-    mindar-image="imageTargetSrc: ./assets/target/targets.mind;"
-
-    color-space="sRGB"
-
-    vr-mode-ui="enabled: false"
-
-    device-orientation-permission-ui="enabled: false"
-
-    renderer="colorManagement: true; physicallyCorrectLights"
-
-  >
-
-    <a-camera
-      position="0 0 0"
-      look-controls="enabled: false"
-    >
-    </a-camera>
-
-    <!-- LEVREK -->
-
-    <a-entity
-      mindar-image-target="targetIndex: 0"
-      id="levrekTarget"
-    >
-
-      <a-box
-
-        position="0 0 0"
-
-        color="blue"
-
-        depth="0.5"
-
-        height="0.5"
-
-        width="0.5"
-
-      >
-      </a-box>
-
-    </a-entity>
-
-    <!-- BALON BALIĞI -->
-
-    <a-entity
-      mindar-image-target="targetIndex: 1"
-      id="balonTarget"
-    >
-
-      <a-sphere
-
-        position="0 0 0"
-
-        radius="0.3"
-
-        color="yellow"
-
-      >
-      </a-sphere>
-
-    </a-entity>
-
-    <!-- KOPEK BALIĞI -->
-
-    <a-entity
-      mindar-image-target="targetIndex: 2"
-      id="kopekTarget"
-    >
-
-      <a-cylinder
-
-        position="0 0 0"
-
-        radius="0.2"
-
-        height="0.5"
-
-        color="red"
-
-      >
-      </a-cylinder>
-
-    </a-entity>
-
-    <!-- YUNUS -->
-
-    <a-entity
-      mindar-image-target="targetIndex: 3"
-      id="yunusTarget"
-    >
-
-      <a-cone
-
-        position="0 0 0"
-
-        radius-bottom="0.3"
-
-        height="0.6"
-
-        color="green"
-
-      >
-      </a-cone>
-
-    </a-entity>
-
-  </a-scene>
-
-  <script src="app.js"></script>
-
+    <script src="app.js"></script>
 </body>
-
 </html>

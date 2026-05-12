@@ -1,188 +1,75 @@
-const popup =
-  document.getElementById("fishPopup");
-
-const fishImage =
-  document.getElementById("fishImage");
-
-const fishName =
-  document.getElementById("fishName");
-
-const fishDesc =
-  document.getElementById("fishDesc");
-
-const fishSize =
-  document.getElementById("fishSize");
-
-const fishHabitat =
-  document.getElementById("fishHabitat");
-
-const closeBtn =
-  document.getElementById("closeBtn");
-
-const startBtn =
-  document.getElementById("startBtn");
-
-const startScreen =
-  document.getElementById("startScreen");
-
-/* Popup kapat */
-
-closeBtn.addEventListener("click", () => {
-
-  popup.classList.add("hidden");
-
-});
-
-/* Balık Verileri */
-
+/* Balık Veri Seti */
 const fishData = {
-
-  levrek: {
-
-    image: "./assets/images/levrek.jpg",
-
-    name: "Levrek",
-
-    desc: "Levrek Ege Denizi’nde yaşayan etçil bir balıktır.",
-
-    size: "40 cm",
-
-    habitat: "Ege Denizi"
-  },
-
-  balon: {
-
-    image: "./assets/images/balonbaligi.jpg",
-
-    name: "Balon Balığı",
-
-    desc: "Balon balıkları istilacı türdür.",
-
-    size: "25 cm",
-
-    habitat: "Akdeniz"
-  },
-
-  kopek: {
-
-    image: "./assets/images/kopekbaligi.jpg",
-
-    name: "Köpek Balığı",
-
-    desc: "Köpek balıkları yırtıcı canlılardır.",
-
-    size: "3 metre",
-
-    habitat: "Okyanus"
-  },
-
-  yunus: {
-
-    image: "./assets/images/yunusbaligi.jpg",
-
-    name: "Yunus Balığı",
-
-    desc: "Yunuslar oldukça zeki canlılardır.",
-
-    size: "2 metre",
-
-    habitat: "Açık Deniz"
-  }
-
+    levrek: {
+        image: "./assets/images/levrek.jpg",
+        name: "Levrek",
+        desc: "Levrek Ege Denizi’nde yaşayan etçil bir balıktır.",
+        size: "40 cm",
+        habitat: "Ege Denizi"
+    },
+    balon: {
+        image: "./assets/images/balonbaligi.jpg",
+        name: "Balon Balığı",
+        desc: "Balon balıkları istilacı ve zehirli bir türdür.",
+        size: "25 cm",
+        habitat: "Akdeniz"
+    },
+    kopek: {
+        image: "./assets/images/kopekbaligi.jpg",
+        name: "Köpek Balığı",
+        desc: "Köpek balıkları okyanusların en eski yırtıcılarıdır.",
+        size: "3 metre",
+        habitat: "Okyanuslar"
+    },
+    yunus: {
+        image: "./assets/images/yunusbaligi.jpg",
+        name: "Yunus Balığı",
+        desc: "Yunuslar oldukça zeki ve sosyal memelilerdir.",
+        size: "2 metre",
+        habitat: "Açık Denizler"
+    }
 };
 
-/* Popup göster */
-
-function showFish(fish) {
-
-  fishImage.src = fish.image;
-
-  fishName.innerText = fish.name;
-
-  fishDesc.innerText = fish.desc;
-
-  fishSize.innerText = fish.size;
-
-  fishHabitat.innerText = fish.habitat;
-
-  popup.classList.remove("hidden");
-
-}
-
-/* Başlat Butonu */
-
-startBtn.addEventListener("click", () => {
-
-  startScreen.style.display = "none";
-
-});
-
-/* MindAR */
-
 document.addEventListener("DOMContentLoaded", () => {
+    const sceneEl = document.querySelector('a-scene');
+    const startScreen = document.getElementById("startScreen");
+    const startBtn = document.getElementById("startBtn");
+    const popup = document.getElementById("fishPopup");
+    const closeBtn = document.getElementById("closeBtn");
 
-  const levrekTarget =
-    document.getElementById("levrekTarget");
+    /* Popup Elemanları */
+    const fishImage = document.getElementById("fishImage");
+    const fishName = document.getElementById("fishName");
+    const fishDesc = document.getElementById("fishDesc");
+    const fishSize = document.getElementById("fishSize");
+    const fishHabitat = document.getElementById("fishHabitat");
 
-  const balonTarget =
-    document.getElementById("balonTarget");
+    // 1. AR ve Kamerayı Başlat
+    startBtn.addEventListener("click", () => {
+        startScreen.style.display = "none";
+        const arSystem = sceneEl.systems["mindar-image-system"];
+        arSystem.start(); 
+        console.log("AR Sistemi Başlatıldı");
+    });
 
-  const kopekTarget =
-    document.getElementById("kopekTarget");
+    // 2. Popup Gösterme Fonksiyonu
+    const showFish = (data) => {
+        fishImage.src = data.image;
+        fishName.innerText = data.name;
+        fishDesc.innerText = data.desc;
+        fishSize.innerText = data.size;
+        fishHabitat.innerText = data.habitat;
+        popup.classList.remove("hidden");
+    };
 
-  const yunusTarget =
-    document.getElementById("yunusTarget");
+    // 3. Popup Kapatma
+    closeBtn.addEventListener("click", () => {
+        popup.classList.add("hidden");
+    });
 
-  /* LEVREK */
-
-  levrekTarget.addEventListener(
-    "targetFound",
-    () => {
-
-      console.log("LEVREK BULUNDU");
-
-      showFish(fishData.levrek);
-
-    }
-  );
-
-  /* BALON */
-
-  balonTarget.addEventListener(
-    "targetFound",
-    () => {
-
-      console.log("BALON BULUNDU");
-
-      showFish(fishData.balon);
-
-    }
-  );
-
-  /* KOPEK */
-
-  kopekTarget.addEventListener(
-    "targetFound",
-    () => {
-
-      console.log("KOPEK BULUNDU");
-
-      showFish(fishData.kopek);
-
-    }
-  );
-
-  /* YUNUS */
-
-  yunusTarget.addEventListener(
-    "targetFound",
-    () => {
-
-      console.log("YUNUS BULUNDU");
-
-      showFish(fishData.yunus);
-
-    }
-  );
-
+    // 4. Hedefleri Dinle (TargetFound)
+    document.getElementById("levrekTarget").addEventListener("targetFound", () => showFish(fishData.levrek));
+    document.getElementById("balonTarget").addEventListener("targetFound", () => showFish(fishData.balon));
+    document.getElementById("kopekTarget").addEventListener("targetFound", () => showFish(fishData.kopek));
+    document.getElementById("yunusTarget").addEventListener("targetFound", () => showFish(fishData.yunus));
 });

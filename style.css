@@ -1,103 +1,84 @@
 body {
-
-  margin: 0;
-  overflow: hidden;
-
-  font-family: Arial, sans-serif;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Başlangıç ekranı */
-
+/* Başlangıç Ekranı */
 #startScreen {
-
-  position: fixed;
-
-  z-index: 999;
-
-  width: 100%;
-  height: 100%;
-
-  background: #001d3d;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  color: white;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #001d3d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 1000;
 }
 
-#startScreen h1 {
-
-  margin-bottom: 20px;
+#startBtn {
+    padding: 15px 40px;
+    font-size: 20px;
+    background: #ffc300;
+    color: #000814;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s;
 }
 
-button {
+#startBtn:active { transform: scale(0.95); }
 
-  padding: 15px 25px;
-
-  font-size: 18px;
-
-  border: none;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-}
-
-/* Popup */
-
-.hidden {
-
-  display: none !important;
-}
+/* Popup Sistemi */
+.hidden { display: none !important; }
 
 #fishPopup {
-
-  position: fixed;
-
-  z-index: 9999;
-
-  width: 100%;
-  height: 100%;
-
-  background: rgba(0,0,0,0.5);
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
 }
 
 .popup-card {
-
-  width: 90%;
-
-  max-width: 350px;
-
-  background: white;
-
-  border-radius: 20px;
-
-  padding: 20px;
-
-  text-align: center;
+    background: white;
+    width: 85%;
+    max-width: 400px;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .popup-card img {
-
-  width: 100%;
-
-  border-radius: 15px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
 }
 
-.popup-card button {
+.details {
+    text-align: left;
+    background: #f0f4f8;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
 
-  width: 100%;
-
-  margin-top: 15px;
+#closeBtn {
+    width: 100%;
+    padding: 12px;
+    background: #003566;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
 }
