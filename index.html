@@ -9,8 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/gh/fcor/aframe-gesture-detector-component@master/dist/aframe-gesture-detector.min.js"></script>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -37,7 +35,6 @@
     <button id="exit3DBtn" class="hidden">✖</button>
 
     <a-scene 
-        gesture-detector
         mindar-image="imageTargetSrc: ./assets/target/targets.mind; autoStart: false;" 
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
@@ -49,7 +46,7 @@
             <img id="waterTexture" src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/waternormals.jpg">
         </a-assets>
 
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <a-camera id="mainCamera" position="0 0 0" look-controls="enabled: false"></a-camera>
 
         <a-entity id="levrekTarget" mindar-image-target="targetIndex: 0">
             <a-gltf-model id="3d-levrek" position="0 0 0" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
@@ -65,9 +62,10 @@
 
         <a-entity id="yunusTarget" mindar-image-target="targetIndex: 3">
             
-            <a-circle id="waterSurface" position="0 -0.5 0" rotation="-90 0 0" radius="1.2" src="#waterTexture" material="opacity: 0.7; transparent: true;" visible="false"></a-circle>
-            
-            <a-gltf-model id="3d-yunus" src="#modelYunus" position="0 0 0" scale="0.4 0.4 0.4" animation-mixer visible="false"></a-gltf-model>
+            <a-entity id="yunusGroup">
+                <a-circle id="waterSurface" position="0 -0.4 0" rotation="-90 0 0" radius="1.0" src="#waterTexture" material="opacity: 0.7; transparent: true;" visible="false"></a-circle>
+                <a-gltf-model id="3d-yunus" src="#modelYunus" position="0 0 0" scale="0.4 0.4 0.4" animation-mixer visible="false"></a-gltf-model>
+            </a-entity>
             
         </a-entity>
     </a-scene>
