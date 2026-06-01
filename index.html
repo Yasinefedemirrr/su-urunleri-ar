@@ -32,6 +32,8 @@
         </div>
     </div>
 
+    <button id="exit3DBtn" class="hidden">✖</button>
+
     <a-scene 
         mindar-image="imageTargetSrc: ./assets/target/targets.mind; autoStart: false;" 
         color-space="sRGB" 
@@ -43,23 +45,21 @@
             <a-asset-item id="modelYunus" src="./assets/models/uploads_files_2372056_carp_with_armature.glb"></a-asset-item>
         </a-assets>
 
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <a-camera position="0 0 0" look-controls="enabled: false">
+            
+            <a-circle id="waterSurface" position="0 -0.5 -3" rotation="-90 0 0" radius="1.5" color="#00a8ff" material="opacity: 0.6; transparent: true; roughness: 0.2;" visible="false"></a-circle>
 
-        <a-entity id="levrekTarget" mindar-image-target="targetIndex: 0">
-            <a-gltf-model id="3d-levrek" position="0 0 0" scale="0.5 0.5 0.5" visible="false"></a-gltf-model>
-        </a-entity>
+            <a-gltf-model id="3d-levrek" position="0 -0.2 -3" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
+            <a-gltf-model id="3d-balon" position="0 -0.2 -3" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
+            <a-gltf-model id="3d-kopek" position="0 -0.2 -3" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
+            <a-gltf-model id="3d-yunus" src="#modelYunus" position="0 -0.2 -3" scale="0.4 0.4 0.4" animation-mixer visible="false"></a-gltf-model>
+            
+        </a-camera>
 
-        <a-entity id="balonTarget" mindar-image-target="targetIndex: 1">
-            <a-gltf-model id="3d-balon" position="0 0 0" scale="0.5 0.5 0.5" visible="false"></a-gltf-model>
-        </a-entity>
-
-        <a-entity id="kopekTarget" mindar-image-target="targetIndex: 2">
-            <a-gltf-model id="3d-kopek" position="0 0 0" scale="0.5 0.5 0.5" visible="false"></a-gltf-model>
-        </a-entity>
-
-        <a-entity id="yunusTarget" mindar-image-target="targetIndex: 3">
-            <a-gltf-model id="3d-yunus" src="#modelYunus" position="0 0 0.5" scale="0.4 0.4 0.4" animation-mixer visible="false"></a-gltf-model>
-        </a-entity>
+        <a-entity id="levrekTarget" mindar-image-target="targetIndex: 0"></a-entity>
+        <a-entity id="balonTarget" mindar-image-target="targetIndex: 1"></a-entity>
+        <a-entity id="kopekTarget" mindar-image-target="targetIndex: 2"></a-entity>
+        <a-entity id="yunusTarget" mindar-image-target="targetIndex: 3"></a-entity>
     </a-scene>
 
     <script src="app.js"></script>
