@@ -51,14 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let activeModelId = null;
 
-    // 1. Kamerayı başlat
+    // Dokunmatik ileri geri hareketi takip etmek için değişkenler
+    let touchStartY = 0;
+    let currentZPosition = 0; // Başlangıç Z pozisyonu
+
+    // Kamerayı başlat
     startBtn.addEventListener("click", () => {
         startScreen.style.display = "none";
         const arSystem = sceneEl.systems["mindar-image-system"];
         arSystem.start(); 
     });
 
-    // 2. Popup Göster
+    // Popup Göster
     const showFish = (data) => {
         if (!exit3DBtn.classList.contains("hidden")) return;
 
@@ -77,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.classList.remove("hidden");
     };
 
-    // 3. Popup Kapat ve 3D'ye Geç
+    // Popup Kapat ve 3D'ye Geç
     closeBtn.addEventListener("click", () => {
         popup.classList.add("hidden");
         
@@ -85,13 +89,41 @@ document.addEventListener("DOMContentLoaded", () => {
             const modelEl = document.getElementById(activeModelId);
             if (modelEl) {
                 modelEl.setAttribute("visible", "true");
+                currentZPosition = 0; // Pozisyonu sıfırla
+                modelEl.setAttribute("position", `0 0 ${currentZPosition}`);
                 waterSurface.setAttribute("visible", "true"); 
                 exit3DBtn.classList.remove("hidden"); 
             }
         }
     });
 
-    // 4. 3D Moddan Çıkış (X Butonu) - Her şeyi tamamen gizler
+    // Dokunmatik Sürükleme ile İleri-Geri Mantığı
+    window.addEventListener("touchstart", (e) => {
+        if (!activeModelId) return;
+        touchStartY = e.touches[0].clientY;
+    });
+
+    window.addEventListener("touchmove", (e) => {
+        if (!activeModelId) return;
+        
+        const modelEl = document.getElementById(activeModelId);
+        if (!modelEl) return;
+
+        const touchCurrentY = e.touches[0].clientY;
+        const deltaY = touchStartY - touchCurrentY; // Yukarı kaydırma pozitif, aşağı negatif
+
+        // Hassasiyet çarpanı (0.005) hızı ayarlar. Sınırlandırma (-1 ile 1 metre arası)
+        currentZPosition += deltaY * 0.005;
+        currentZPosition = Math.max(-1, Math.min(1, currentZPosition)); 
+
+        // Modeli yeni Z eksenine taşı
+        modelEl.setAttribute("position", `0 0 ${currentZPosition}`);
+        
+        // Bir sonraki hareket hesaplaması için mevcut konumu güncelle
+        touchStartY = touchCurrentY;
+    });
+
+    // 3D Moddan Çıkış (X Butonu)
     exit3DBtn.addEventListener("click", () => {
         const models = ["3d-levrek", "3d-balon", "3d-kopek", "3d-yunus"];
         models.forEach(mId => {
@@ -104,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
         activeModelId = null; 
     });
 
-    // 5. Hedef Dinleyicileri
+    // Hedef Dinleyicileri
     document.getElementById("levrekTarget").addEventListener("targetFound", () => {
         activeModelId = "3d-levrek";
         showFish(fishData.levrek);
