@@ -35,6 +35,7 @@
     <button id="exit3DBtn" class="hidden">✖</button>
 
     <a-scene 
+        id="arScene"
         mindar-image="imageTargetSrc: ./assets/target/targets.mind; autoStart: false;" 
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
@@ -46,28 +47,21 @@
             <img id="waterTexture" src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/waternormals.jpg">
         </a-assets>
 
-        <a-camera id="mainCamera" position="0 0 0" look-controls="enabled: false"></a-camera>
-
-        <a-entity id="levrekTarget" mindar-image-target="targetIndex: 0">
-            <a-gltf-model id="3d-levrek" position="0 0 0" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
-        </a-entity>
-
-        <a-entity id="balonTarget" mindar-image-target="targetIndex: 1">
-            <a-gltf-model id="3d-balon" position="0 0 0" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
-        </a-entity>
-
-        <a-entity id="kopekTarget" mindar-image-target="targetIndex: 2">
-            <a-gltf-model id="3d-kopek" position="0 0 0" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
-        </a-entity>
-
-        <a-entity id="yunusTarget" mindar-image-target="targetIndex: 3">
+        <a-camera id="mainCamera" position="0 0 0" look-controls="enabled: false">
             
-            <a-entity id="yunusGroup">
-                <a-circle id="waterSurface" position="0 -0.4 0" rotation="-90 0 0" radius="1.0" src="#waterTexture" material="opacity: 0.7; transparent: true;" visible="false"></a-circle>
-                <a-gltf-model id="3d-yunus" src="#modelYunus" position="0 0 0" scale="0.4 0.4 0.4" animation-mixer visible="false"></a-gltf-model>
-            </a-entity>
+            <a-circle id="waterSurface" position="0 -0.5 -3" rotation="-90 0 0" radius="1.2" src="#waterTexture" material="opacity: 0.7; transparent: true;" visible="false"></a-circle>
+
+            <a-gltf-model id="3d-levrek" position="0 -0.2 -3" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
+            <a-gltf-model id="3d-balon" position="0 -0.2 -3" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
+            <a-gltf-model id="3d-kopek" position="0 -0.2 -3" scale="0.4 0.4 0.4" visible="false"></a-gltf-model>
+            <a-gltf-model id="3d-yunus" src="#modelYunus" position="0 -0.2 -3" scale="0.4 0.4 0.4" animation-mixer visible="false"></a-gltf-model>
             
-        </a-entity>
+        </a-camera>
+
+        <a-entity id="levrekTarget" mindar-image-target="targetIndex: 0"></a-entity>
+        <a-entity id="balonTarget" mindar-image-target="targetIndex: 1"></a-entity>
+        <a-entity id="kopekTarget" mindar-image-target="targetIndex: 2"></a-entity>
+        <a-entity id="yunusTarget" mindar-image-target="targetIndex: 3"></a-entity>
     </a-scene>
 
     <script src="app.js"></script>

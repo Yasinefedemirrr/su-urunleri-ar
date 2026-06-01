@@ -7,12 +7,12 @@ const fishData = {
 
 document.addEventListener("DOMContentLoaded", () => {
     const sceneEl = document.querySelector('a-scene');
-    const cameraEl = document.getElementById("mainCamera");
     const startScreen = document.getElementById("startScreen");
     const startBtn = document.getElementById("startBtn");
     const popup = document.getElementById("fishPopup");
     const closeBtn = document.getElementById("closeBtn");
     const exit3DBtn = document.getElementById("exit3DBtn");
+    const waterSurface = document.getElementById("waterSurface");
 
     const fishImage = document.getElementById("fishImage");
     const fishName = document.getElementById("fishName");
@@ -21,20 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const fishHabitat = document.getElementById("fishHabitat");
 
     let activeModelId = null;
-    let currentTargetId = null;
+    let arSystem = null;
 
-    // Dokunmatik İleri-Geri Değişkenleri
+    // Dokunmatik Sürükleme (İleri-Geri) Değişkenleri
     let touchStartY = 0;
-    let currentZPosition = -3; // Kamera içinde başlangıç uzaklığı (3 metre ileri)
+    let currentZPosition = -3; 
 
     // Kamerayı başlat
     startBtn.addEventListener("click", () => {
         startScreen.style.display = "none";
-        sceneEl.systems["mindar-image-system"].start(); 
+        arSystem = sceneEl.systems["mindar-image-system"];
+        arSystem.start(); 
     });
 
     const showFish = (data) => {
-        // Eğer 3D ekran zaten aktifse yeni popup açılmasın
+        // Eğer 3D mod şu an aktifse yeni tarama popup'ı açma
         if (!exit3DBtn.classList.contains("hidden")) return;
 
         fishImage.src = data.image;
@@ -47,38 +48,31 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.classList.remove("hidden");
     };
 
-    // Popup Kapat ve Kilitleme Moduna Geç
+    // Popup Kapat ve 3D Modu Aktif Et
     closeBtn.addEventListener("click", () => {
         popup.classList.add("hidden");
         
         if (activeModelId) {
-            let elToMove;
-            
-            // Yunus için su efektiyle beraber tüm grubu taşıyoruz, diğerleri için sadece modeli
-            if (activeModelId === "3d-yunus") {
-                elToMove = document.getElementById("yunusGroup");
-                document.getElementById("waterSurface").setAttribute("visible", "true");
-            } else {
-                elToMove = document.getElementById(activeModelId);
-            }
+            const modelEl = document.getElementById(activeModelId);
+            if (modelEl) {
+                // 1. Modeli ve Suyu Görünür Yap
+                modelEl.setAttribute("visible", "true");
+                waterSurface.setAttribute("visible", "true");
+                exit3DBtn.classList.remove("hidden");
+                
+                // Pozisyonu varsayılana sıfırla
+                currentZPosition = -3;
+                modelEl.setAttribute("position", `0 -0.2 ${currentZPosition}`);
 
-            if (elToMove) {
-                // KRİTİK NOKTA: Modeli hedef resmin içinden söküp kameranın içine taşıyoruz!
-                cameraEl.appendChild(elToMove);
-                
-                // Kameranın önünde düzgün durması için pozisyonunu sabitliyoruz
-                currentZPosition = -3; 
-                elToMove.setAttribute("position", `0 -0.3 ${currentZPosition}`);
-                elToMove.setAttribute("rotation", "0 0 0"); // Karşıya bakması için
-                
-                // Model elemanının kendisini görünür yapıyoruz
-                document.getElementById(activeModelId).setAttribute("visible", "true");
-                exit3DBtn.classList.remove("hidden"); 
+                // 2. EN ÖNEMLİ KISIM: Resmi kaybetsek bile gitmemesi için MindAR takibini durduruyoruz
+                if (arSystem) {
+                    arSystem.pause(true); // Kamerayı açık bırak ama resim takibini dondur
+                }
             }
         }
     });
 
-    // Dokunmatik İleri-Geri Kaydırma Kontrolü
+    // Dokunmatik İleri-Geri Mantığı
     window.addEventListener("touchstart", (e) => {
         if (!activeModelId || exit3DBtn.classList.contains("hidden")) return;
         touchStartY = e.touches[0].clientY;
@@ -87,56 +81,43 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("touchmove", (e) => {
         if (!activeModelId || exit3DBtn.classList.contains("hidden")) return;
         
-        let elToMove = (activeModelId === "3d-yunus") ? document.getElementById("yunusGroup") : document.getElementById(activeModelId);
-        if (!elToMove) return;
+        const modelEl = document.getElementById(activeModelId);
+        if (!modelEl) return;
 
         const touchCurrentY = e.touches[0].clientY;
         const deltaY = touchStartY - touchCurrentY;
 
-        // Kameranın önündeki Z eksenini hareket ettirir (-1.5m ile -6m arası sınır)
+        // Yukarı/Aşağı sürüklemeye göre Z eksenini günceller (-1.5m ile -5m arası sınır)
         currentZPosition += deltaY * 0.01;
-        currentZPosition = Math.max(-6, Math.min(-1.5, currentZPosition)); 
+        currentZPosition = Math.max(-5, Math.min(-1.5, currentZPosition)); 
 
-        elToMove.setAttribute("position", `0 -0.3 ${currentZPosition}`);
+        modelEl.setAttribute("position", `0 -0.2 ${currentZPosition}`);
         touchStartY = touchCurrentY;
     });
 
-    // 3D Moddan Çıkış (X Butonu) - Modelleri kameradan söküp eski evine (resim hedefine) geri koyar
+    // 3D Moddan Çıkış (X Butonu)
     exit3DBtn.addEventListener("click", () => {
         exit3DBtn.classList.add("hidden");
+        waterSurface.setAttribute("visible", "false");
 
-        // Yunus Sıfırlama
-        const yunusGroup = document.getElementById("yunusGroup");
-        if (yunusGroup && yunusGroup.parentNode === cameraEl) {
-            document.getElementById("3d-yunus").setAttribute("visible", "false");
-            document.getElementById("waterSurface").setAttribute("visible", "false");
-            document.getElementById("yunusTarget").appendChild(yunusGroup); // Orijinal resim hedefine geri koy
-            yunusGroup.setAttribute("position", "0 0 0");
-            yunusGroup.setAttribute("rotation", "0 0 0");
-        }
-
-        // Standart Balıkları Sıfırlama (İlerisi için önlem)
-        const rest = [
-            { m: "3d-levrek", t: "levrekTarget" },
-            { m: "3d-balon", t: "balonTarget" },
-            { m: "3d-kopek", t: "kopekTarget" }
-        ];
-        rest.forEach(obj => {
-            const el = document.getElementById(obj.m);
-            if (el && el.parentNode === cameraEl) {
-                el.setAttribute("visible", "false");
-                document.getElementById(obj.t).appendChild(el);
-                el.setAttribute("position", "0 0 0");
-            }
+        // Tüm modelleri gizle
+        const models = ["3d-levrek", "3d-balon", "3d-kopek", "3d-yunus"];
+        models.forEach(mId => {
+            const el = document.getElementById(mId);
+            if (el) el.setAttribute("visible", "false");
         });
 
+        // MindAR takibini yeniden başlat (Yeni balık tarayabilmek için)
+        if (arSystem) {
+            arSystem.unpause();
+        }
+
         activeModelId = null;
-        currentTargetId = null;
     });
 
-    // Hedef Bulma Olayları
-    document.getElementById("levrekTarget").addEventListener("targetFound", () => { currentTargetId = "levrekTarget"; activeModelId = "3d-levrek"; showFish(fishData.levrek); });
-    document.getElementById("balonTarget").addEventListener("targetFound", () => { currentTargetId = "balonTarget"; activeModelId = "3d-balon"; showFish(fishData.balon); });
-    document.getElementById("kopekTarget").addEventListener("targetFound", () => { currentTargetId = "kopekTarget"; activeModelId = "3d-kopek"; showFish(fishData.kopek); });
-    document.getElementById("yunusTarget").addEventListener("targetFound", () => { currentTargetId = "yunusTarget"; activeModelId = "3d-yunus"; showFish(fishData.yunus); });
+    // Hedef Dinleyicileri
+    document.getElementById("levrekTarget").addEventListener("targetFound", () => { activeModelId = "3d-levrek"; showFish(fishData.levrek); });
+    document.getElementById("balonTarget").addEventListener("targetFound", () => { activeModelId = "3d-balon"; showFish(fishData.balon); });
+    document.getElementById("kopekTarget").addEventListener("targetFound", () => { activeModelId = "3d-kopek"; showFish(fishData.kopek); });
+    document.getElementById("yunusTarget").addEventListener("targetFound", () => { activeModelId = "3d-yunus"; showFish(fishData.yunus); });
 });
