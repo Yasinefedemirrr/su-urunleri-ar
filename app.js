@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const popup = document.getElementById("fishPopup");
     const closeBtn = document.getElementById("closeBtn");
     
-    // Yeni eklenen elemanlar
     const exit3DBtn = document.getElementById("exit3DBtn");
     const waterSurface = document.getElementById("waterSurface");
 
@@ -52,16 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let activeModelId = null;
 
-    // Kamerayı başlat
+    // 1. Kamerayı başlat
     startBtn.addEventListener("click", () => {
         startScreen.style.display = "none";
         const arSystem = sceneEl.systems["mindar-image-system"];
         arSystem.start(); 
     });
 
-    // Popup Göster
+    // 2. Popup Göster
     const showFish = (data) => {
-        // Eğer ekranda halihazırda bir 3D model açıksa (kullanıcı X'e basmamışsa) yeni popup açma
         if (!exit3DBtn.classList.contains("hidden")) return;
 
         fishImage.src = data.image;
@@ -79,28 +77,34 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.classList.remove("hidden");
     };
 
-    // Popup Kapat ve 3D'ye Geç
+    // 3. Popup Kapat ve 3D'ye Geç
     closeBtn.addEventListener("click", () => {
         popup.classList.add("hidden");
         
         if (activeModelId) {
-            document.getElementById(activeModelId).setAttribute("visible", "true");
-            waterSurface.setAttribute("visible", "true"); // Suyu göster
-            exit3DBtn.classList.remove("hidden"); // X butonunu göster
+            const modelEl = document.getElementById(activeModelId);
+            if (modelEl) {
+                modelEl.setAttribute("visible", "true");
+                waterSurface.setAttribute("visible", "true"); 
+                exit3DBtn.classList.remove("hidden"); 
+            }
         }
     });
 
-    // 3D Moddan Çıkış (X Butonu)
+    // 4. 3D Moddan Çıkış (X Butonu) - Her şeyi tamamen gizler
     exit3DBtn.addEventListener("click", () => {
-        if (activeModelId) {
-            document.getElementById(activeModelId).setAttribute("visible", "false");
-        }
-        waterSurface.setAttribute("visible", "false"); // Suyu gizle
-        exit3DBtn.classList.add("hidden"); // X butonunu gizle
-        activeModelId = null; // Hafızayı sıfırla ki yeni balık taranabilsin
+        const models = ["3d-levrek", "3d-balon", "3d-kopek", "3d-yunus"];
+        models.forEach(mId => {
+            const el = document.getElementById(mId);
+            if (el) el.setAttribute("visible", "false");
+        });
+        
+        waterSurface.setAttribute("visible", "false"); 
+        exit3DBtn.classList.add("hidden"); 
+        activeModelId = null; 
     });
 
-    // Hedef Bulunduğunda (targetLost sildik, resim kadrajdan çıksa da ekran kapanmayacak)
+    // 5. Hedef Dinleyicileri
     document.getElementById("levrekTarget").addEventListener("targetFound", () => {
         activeModelId = "3d-levrek";
         showFish(fishData.levrek);
